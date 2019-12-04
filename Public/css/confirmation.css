@@ -1,0 +1,50 @@
+body{
+    margin: 0 !important;
+    background-color: #1F2833;
+    font-size: 14px;
+}
+
+footer{
+    color: white;
+    min-height: 10em;
+    background-color: #45A29E;
+}
+
+input{
+    height: 3em;
+    width: 100%;
+    margin-top: 0.5em;
+
+    background: #FFFFFF;
+    border: 2px solid #5D6266;
+    border-radius: 10px;
+    color: #555759;
+    font-size: 1em;
+    outline-color: #1F2833;
+}
+
+input[placeholder]{
+    padding-left: 0.4em;
+}
+
+.btn{
+    width: 50%;
+}
+
+nav .btn{
+    width: auto;
+}
+
+.card{
+    border: 1px solid #45A29E;
+    background-color: #1F2833;
+    color: white;
+}
+
+.card img{
+    max-height: 100%;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
