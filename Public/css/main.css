@@ -1,43 +1,37 @@
-html{
-  margin: 0 !important;
-}
-
-body{
-    background-color: #1F2833;
-    font-size: 14px;
-    min-height: 100vh; 
-}
-
-
-footer{
-  color: white;
-  min-height: 11em;
-  background-color: #45A29E;
-}
-
-.container{
-  margin: 4% auto 4% auto;
-}
-
-
 a[class="navbar-brand"]{
-    color: black !important;
+  color: black !important;
 }
 
-.flex-grow {
-  flex: 1;
+button>a{
+  color: #000000;
 }
 
-.nav-link{
-    color: #000 !important;
+button>a:hover{
+  text-decoration: none;
+  color: #ffffff;
 }
 
-.dropdown-menu{
-    border-radius: 0;
+img{
+  padding: 4%;
+  height: 250px;
+  background-color: #e0ebeb;
 }
 
-.dropdown-menu{
-  padding:0;
+input{
+  height: 3em;
+  width: 100%;
+  
+  background: #FFFFFF;
+  border: 2px solid #5D6266;
+  border-radius: 10px;
+  color: #555759;
+  font-size: 1em;
+  outline-color: #1F2833;
+}
+
+h3{
+  text-align: center;
+  color: white; 
 }
 
 .category
@@ -53,16 +47,6 @@ a[class="navbar-brand"]{
 .card{
   padding: 0.2em;
 }
-
-img{
-  padding: 4%;
-  height: 250px;
-  background-color: #e0ebeb;
-  /* background: rgb(0,0,0);
-  background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(153,179,255,1) 0%, rgba(102,140,255,1) 100%); */
-}
-
-.card{border: none;}
 
 .category img{
   width: 100%;
@@ -81,6 +65,11 @@ img{
   color: #2699FB;
   border: 1px solid #2699FB;
   cursor: pointer;
+}
+
+.jumbotron{
+  height: 100vh;
+  background-color: #1F2833;  
 }
 
 @media screen and (max-width: 768px)

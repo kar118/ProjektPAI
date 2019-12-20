@@ -1,59 +1,32 @@
-html{
-    margin: 0 !important;
-  }
-  
-  body{
-      background-color: #1F2833;
-      font-size: 14px;
-      min-height: 100vh; 
-  }
-  
-  a[class="navbar-brand"]{
-      color: black !important;
-  }
-  
-  .flex-grow {
-    flex: 1;
-  }
-  
-  .nav-link{
-      color: #000 !important;
-  }
-  
-  .dropdown-menu{
-      border-radius: 0;
-  }
-  
-  .dropdown-menu{
-    padding:0;
-  }
-  
+a[class="navbar-brand"]{
+  color: black !important;
+}
+
+a{float: right;}
+
 h3{color: #AFD275;}
 
 h6{color:white;}
 
-a{float: right;}
-
 input{
-    height: 3em;
-    width: 100%;
-    margin-top: 0.5em;
+  height: 3em;
+  width: 100%;
 
-    background: #FFFFFF;
-    border: 2px solid #5D6266;
-    border-radius: 10px;
-    color: #555759;
-    font-size: 1em;
-    outline-color: #1F2833;
+  background: #FFFFFF;
+  border: 2px solid #5D6266;
+  border-radius: 10px;
+  color: #555759;
+  font-size: 1em;
+  outline-color: #1F2833;
 }
 
 input[placeholder]{
     padding-left: 0.4em;
 }
 
-footer{
-  color: white;
-  background-color: #45A29E;
+img{
+  padding: 4%;
+  height: 250px;
 }
 
 .container{
@@ -66,27 +39,4 @@ footer{
 
 .card img{
   background-color: #e0ebeb;
-}
-
-img{
-  padding: 4%;
-  height: 250px;
-}
-
-.container{
-  margin-top: 4%;
-}
-
-.btn{
-    width: 40%;
-}
-
-.btn-outline-success{
-  width: 25%;
-}
-
-@media only screen and (max-width: 768px){
-    .btn{
-        width: 60%;
-    }
 }

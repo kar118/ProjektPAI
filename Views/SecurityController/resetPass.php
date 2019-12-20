@@ -1,23 +1,20 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <!-- Own CSS -->
-    <link rel="stylesheet" href="../Public/css/resetPass.css">
-    <title>Hello, world!</title>
-</head>
-<body>
+    <?php
+      include($_SERVER['DOCUMENT_ROOT'].'/Projekt/Views/Common/head.php');
+    ?>
+    <link rel="stylesheet" href="Public/css/resetPass.css">
+    <title>WSM</title>
+  </head>
+  <body>
     <div class="container mt-4">
         <div class="logo">
             <div class="row justify-content-center">
-                <h3>Cinect</h3>
+                <h3 class="display-4">Cinect</h3>
             </div>
             <div class="row justify-content-center">
-                <p>Hire multimedia out from Cincat!</p>
+                <p class="lead">Hire multimedia out from Cincat!</p>
             </div>
         </div>
 
@@ -27,7 +24,7 @@
                     <h6>Reset password</h6>
                 </div>
             </div>
-            <div class="row justify-content-center mb-4">
+            <div class="row justify-content-center">
                 <div class="col-lg-7 col-md-7 col-sm-11 col-xs-11">
                     <input type="email" placeholder="email">
                 </div>

@@ -1,0 +1,11 @@
+.nav-link{
+    color: #000 !important;
+}
+
+.dropdown-menu{
+    border-radius: 0;
+}
+
+.dropdown-menu{
+  padding:0;
+}

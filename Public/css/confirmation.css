@@ -1,19 +1,6 @@
-body{
-    margin: 0 !important;
-    background-color: #1F2833;
-    font-size: 14px;
-}
-
-footer{
-    color: white;
-    min-height: 10em;
-    background-color: #45A29E;
-}
-
-input{
+ input{
     height: 3em;
     width: 100%;
-    margin-top: 0.5em;
 
     background: #FFFFFF;
     border: 2px solid #5D6266;
@@ -25,14 +12,6 @@ input{
 
 input[placeholder]{
     padding-left: 0.4em;
-}
-
-.btn{
-    width: 50%;
-}
-
-nav .btn{
-    width: auto;
 }
 
 .card{
@@ -47,4 +26,3 @@ nav .btn{
     margin-left: auto;
     margin-right: auto;
 }
-
