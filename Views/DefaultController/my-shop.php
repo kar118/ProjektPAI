@@ -21,17 +21,18 @@
   <div class="container">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="?page=main">Main</a></li>
-        <li class="breadcrumb-item">My shop</li>
-        <li class="breadcrumb-item active" aria-current="page">My items</li>
+        <li class="breadcrumb-item text"><a href="?page=main">Main</a></li>
+        <li class="breadcrumb-item active" aria-current="page">My shop</li>
       </ol>
     </nav>
-    <div class="row card-deck mx-1">
-      <div class="card col-md-3">
-        <img class="card-img-top" src="Public/img/lenowo_legion.png" alt="Card image cap">
-        <div class="card-body">
-          <h5 class="card-title">Lenovo Legion</h5>
-          <p class="card-text">
+    
+    <div class="row no-gutters bg-light position-relative my-4">
+      <div class="col-md-4 mb-md-0 p-md-1">
+        <img src="Public/img/lenowo_legion.png" class="" alt="...">
+      </div>
+      <div class="col-md-8 position-static p-4 pl-md-0">
+        <h5 class="mt-0">Columns with stretched link</h5>
+        <p class="card-text">
               <table class="table table-striped">
                   <tbody>
                     <tr>
@@ -54,8 +55,41 @@
                 <a href="#" class="alert-link">Prolong renting</a>
               </div>
           </ul>
-        </div>
+      </div>
     </div>
+
+    <div class="row no-gutters bg-light position-relative my-4">
+      <div class="col-md-4 mb-md-0 p-md-1">
+        <img src="Public/img/lenowo_legion.png" class="" alt="...">
+      </div>
+      <div class="col-md-8 position-static p-4 pl-md-0">
+        <h5 class="mt-0">Columns with stretched link</h5>
+        <p class="card-text">
+              <table class="table table-striped">
+                  <tbody>
+                    <tr>
+                      <td>From</td>
+                      <td>12-10-2019</td>
+                    </tr>
+                    <tr>
+                      <td>To</td>
+                      <td>15-10-2019</td>
+                    </tr>
+                    <tr>
+                      <td>Total cost</td>
+                      <td>150.00$</td>
+                    </tr>
+                  </tbody>
+                </table>
+          </p>
+          <ul class="list-group list-group-flush">
+              <div class="alert alert-primary" role="alert">
+                <a href="#" class="alert-link">Prolong renting</a>
+              </div>
+          </ul>
+      </div>
+    </div>
+
   </div>
 </div>
 <?php

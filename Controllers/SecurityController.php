@@ -3,6 +3,7 @@ require_once 'AppController.php';
 require_once 'Models/Address.php';
 require_once 'Models/User.php';
 require_once 'Models/Database.php';
+require_once 'Models/Validation.php';
 
 class SecurityController extends AppController
 {
@@ -33,46 +34,55 @@ class SecurityController extends AppController
 
     public function login(){
         $user = null;
+        $address = null;
+        $addressId = null; 
+
         $db = new Database('localhost','project','root','');
         $conn = $db->getConn();
-        $stmt = $conn->query('SELECT * FROM users');
-            
-        foreach($stmt as $row)
+        $user_stmt = $conn->prepare('SELECT * FROM users');
+        $address_stmt = $conn->prepare('SELECT * FROM addresses where addressId = :addressId');
+        $user_stmt->execute();
+        
+        foreach($user_stmt as $row)
         {
             if($row['email'] === $_POST['email'])
             {
-                $user = new User($row['name'],$row['surname'],$row['email'],$row['password']);
+                $addressId = $row['addressId'];
+                $address_stmt->bindParam(':addressId',$addressId,PDO::PARAM_INT);
+                $address_stmt->execute();
+                $tmp = $address_stmt->fetch(PDO::FETCH_ASSOC);
+                $address = new Address($tmp['country'],$tmp['locality'],$tmp['street'],$tmp['streetNum'],$tmp['flatNum'],$tmp['postcodeNum'],$tmp['postcodeLocality']);
+                $user = new User($row['name'],$row['surname'],$address,$row['email'],$row['password']);
+                $_SESSION['user'] = serialize($user);
+                $_SESSION["id"] = $user->getEmail();
                 $db->closeConnection();
                 break;
             }
         }
-        $stmt->closeCursor();
 
-            if(!$user) {
-                return $this->render('singIn', ['message' => ['Email not recognized']]);
-            }
-            if (!password_verify($_POST['password'], $user->getPassword())) {
-                return $this->render('singIn', ['message' => ['Wrong password']]);
-            } else {
-                $_SESSION["id"] = $user->getEmail();
-                $_SESSION["name"] = $user->getName();
-                $url = "http://$_SERVER[HTTP_HOST]/";
-                header("Location: {$url}projekt/index.php?page=main");
-                exit();
-            }
+        if(!$user) {
+            return $this->render('singIn', ['message' => ['Email not recognized']]);
+        }
+
+        if(!password_verify($_POST['password'], $user->getPassword())) {
+            return $this->render('singIn', ['message' => ['Wrong password']]);
+        }
+        else
+        {
+            $url = "http://$_SERVER[HTTP_HOST]/";
+            header("Location: {$url}projekt/index.php?page=main");
+        }
+
         $this->render('singIn');
     }
 
     public function logout(){
         session_unset();
         session_destroy();
-
         $this->render('singIn',['text' => 'You have been successfully logged out!']);
     }
 
     public function createAccount(){
-        $address = null;
-        $user = null;
 
         $name = strtoupper($_POST['name']);
         $surname = strtoupper($_POST['surname']);
@@ -88,188 +98,49 @@ class SecurityController extends AppController
         $post_locality = strtoupper($_POST['postcode_locality']);
 
         $flag = true;
-        $password_hash = null;
+        $password_hash = password_hash($pass, PASSWORD_DEFAULT);
         $maxId = null;
 
-        //Sygnalizowanie błędów
-        $messages = [];
-        $err_surname_name = null;
-        $err_surname_name_val = null;
-        $err_email = null;
-        $err_email_val = null;
-        $err_pass = null;
-        $err_pass_val = null;
-        $err_country = null;
-        $err_country_val = null;
-        $err_locality = null;
-        $err_locality_val = null;
-        $err_street = null;
-        $err_street_val = null;
-        $err_flat_number = null;
-        $err_flat_number_val = null;
-        $err_postcode = null;
-        $err_postcode_val = null;
-        $err = null;
-        $err_val = null;
+        $validation = new Validation($name,$surname,$email,$pass,$pass_confirm,$country,$locality,$street,$street_number,$flat_number,$post_number,$post_locality);
+        $flag = $validation->validateRegisterForm();
+        $messages = $validation->getMessages();
 
-        //Sprawdzenie poprawności imienia
-
-        if(strlen($name) < 3 || (1 === preg_match('~[0-9]~', $name))){
-            $flag = false;
-            $err_surname_name = 'err_surname_name';
-            $err_surname_name_val = 'Incorrect name or surname!';
-        }
-
-        //Sprawdzenie poprawności nazwiska
-
-        if(strlen($surname) < 3 || (1 === preg_match('~[0-9]~', $surname))){
-            $flag = false;
-            $err_surname_name = 'err_surname_name';
-            $err_surname_name_val = 'Incorrect name or surname!';
-        }
-
-        //Sprawdzenie poprawności email
-
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $flag = false;
-            $err_email = 'err_email';
-            $err_email_val = 'Incorrect email!';
-        }
-
-        //Sprawdzenie poprawności i jakości hasła
-
-        if($pass !== $pass_confirm){
-            $flag = false;
-            $err_pass = 'err_pass';
-            $err_pass_val = 'Different passwords!';
-        }
-        else if(strlen($pass) < 8){
-            $flag = false;
-            $err_pass = 'err_pass';
-            $err_pass_val = 'Password must consist of at least 8 characters!';
-        }
-        else{
-            $password_hash = password_hash($pass, PASSWORD_DEFAULT);
-        }
-
-        //Sprawdzenie poprawności państwa
-
-        if(strlen($country) < 3){
-            $flag = false;
-            $err_country = 'err_country';
-            $err_country_val = 'Name of country is incorrect!';
-        }
-
-        //Sprawdzenie poprawności miejscowości
-
-        if(strlen($locality) < 1){
-            $flag = false;
-            $err_locality = 'err_locality';
-            $err_locality_val = 'Name of locality is incorrect!';
-        }
-
-        //Sprawdzenie poprawności ulicy
-
-        if(strlen($street) < 1){
-            $flag = false;
-            $err_street = 'err_street';
-            $err_street_val = 'Name of street is incorrect!';
-        }
-
-        //Sprawdzenie poprawności numeru
-
-        if($street_number < 1){
-            $flag = false;
-            $err_street = 'err_street';
-            $err_street_val = 'Name of street is incorrect!';
-        }
-
-        //Sprawdzenie poprawności numeru mieszkania
-
-        if($flat_number < 1){
-            $flag = false;
-            $err_flat_number = 'err_flat_number';
-            $err_flat_number_val = 'Name of street is incorrect!';
-        }
-
-        //Sprawdzenie poprawności miejscowości kodu
-
-        if(strlen($post_locality) < 1){
-            $flag = false;
-            $err_postcode = 'err_postcode';
-            $err_postcode_val = 'Postcode locality is incorrect!';
-        }
-
-        //Sprawdzenie poprawności numeru kodu
-
-        //Dodanie rekordu do tabeli adres i users
-        //Należy porównać email z emailami z bazy jeżeli przejdzie to użytkownik na pewno zostanie dodany inaczej wyrzucamy błąd
-        //Utworzyć klasę walidate i przez nią przepuszczać
-        //Od razu zwracamy adressId a nie za pomocą max(), bo niebezpieczne dla wielu userów
-        //Warto zrobić testy jUnit w php
-        //zmienić widoki na jeden pod drugim
         if($flag){
-            $address = new Address($country, $locality, $street, $street_number, $flat_number, $post_number, $post_locality);
+            $conn = null;
 
             try{
-                $insertAddress = "INSERT INTO addresses (country, locality, street, streetNum, postcodeLocality, postcodeNum, flatNum) VALUES ('$country', '$locality', '$street', '$street_number', '$post_locality', '$post_number', '$flat_number')";
                 $db = new Database('localhost','project','root','');
-                $conn = $db->getConn();    
-                $stmt = $conn->query($insertAddress);    
-            }catch(PDOException $e){
-                echo $e->getMessage();
-                $db->closeConnection();
-                exit();
-            }
-            
-            //Spr. max addressId
-           try{
-                $maxAddressId = 'SELECT MAX(addressId) as id FROM addresses';
-                $stmt = $conn->query($maxAddressId);
-    
-                foreach($stmt as $row)
-                    $maxId = $row['id'];
-            }catch(PDOException $e){
-                echo $e->getMessage();
-                $db->closeConnection();
-                exit();
-            } 
+                $conn = $db->getConn();
+                $conn->beginTransaction();                
 
-            //Dodanie rekordu do tabeli użytkownicy
-            if($maxId){
-                try{
-                    $insertUser = "INSERT INTO users (userId, name, surname, email, password, addressId) VALUES (NULL,'$name','$surname','$email','$password_hash','$maxId')";  
-                    $conn->query($insertUser);
-                }catch(PDOException $e){
-                    echo $e->getMessage();
-                    $db->closeConnection();
-                    exit();
-                }
-            }
-            else{
-                exit();
+                $insertAddress = $conn->prepare('INSERT INTO addresses (country, locality, street, streetNum, postcodeLocality, postcodeNum, flatNum) VALUES (:country, :locality, :street, :street_number, :post_locality, :post_number, :flat_number)');
+                $insertAddress->bindParam(':country',$country,PDO::PARAM_STR);
+                $insertAddress->bindParam(':locality',$locality,PDO::PARAM_STR);
+                $insertAddress->bindParam(':street',$street,PDO::PARAM_STR);
+                $insertAddress->bindParam(':street_number',$street_number,PDO::PARAM_STR);
+                $insertAddress->bindParam(':post_locality',$post_locality,PDO::PARAM_STR);
+                $insertAddress->bindParam(':post_number',$post_number,PDO::PARAM_STR);
+                $insertAddress->bindParam(':flat_number',$flat_number,PDO::PARAM_STR);
+                $insertAddress->execute();
+    
+                $maxId = $conn->lastInsertId();
+                
+                $conn->query("INSERT INTO users (name, surname, email, password, addressId) VALUES ('$name', '$surname','$email','$password_hash','$maxId')");  
+                $conn->commit();
+
+            }catch(PDOException $e){
+                $conn->rollBack();
                 $db->closeConnection();
+
                 $err = 'err';
                 $err_val = 'Account has not been created!';
+                $this->render('singUp', $messages);
             }
-    
-            $db->closeConnection();
-            //Przekierownaie do strony logowania
 
             $this->render('singIn', ['message' => ['You\'ve created an account!']]);
+            $db->closeConnection();
         }
         else{
-            $messages = [
-                $err_surname_name=>$err_surname_name_val,
-                $err_email=>$err_email_val,
-                $err_pass=>$err_pass_val,
-                $err_street=>$err_street_val,
-                $err_flat_number=>$err_flat_number_val,
-                $err_country=>$err_country_val,
-                $err_locality=>$err_locality_val,
-                $err_postcode=>$err_postcode_val,
-                $err=>$err_val
-            ];
             $this->render('singUp', $messages);
         }
     }

@@ -9,10 +9,10 @@ class User{
     private $email;
     private $password;
 
-    public function __construct($name, $surname, /*Address $address,*/ $email, $password){
+    public function __construct($name, $surname, Address $address, $email, $password){
         $this->name = $name;
         $this->surname = $surname;
-        // $this->address = $address;
+        $this->address = $address;
         $this->email = $email;
         $this->password = $password;
     }
@@ -35,5 +35,9 @@ class User{
 
     public function getPassword() : string{
         return $this->password;
+    }
+
+    public function getAddress() : Address{
+        return $this->address;
     }
 }

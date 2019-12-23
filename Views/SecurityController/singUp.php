@@ -20,7 +20,7 @@
             <h3 class="display-4">Cinect</h3>
         </div>
         <div class="row justify-content-center">
-            <p class="lead">Hire multimedia out from Cincat!</p>
+            <p class="lead">Hire multimedia out from Cinect!</p>
         </div>
     </div>
     <div class="container">

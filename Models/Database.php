@@ -6,7 +6,7 @@ class Database{
     private $name;
     private $password;
 
-    private $conn;
+    private $conn = null;
 
     public function __construct(
         $host,
@@ -21,7 +21,6 @@ class Database{
     }
 
     public function getConn(): PDO{
-        $conn = null;
         try {
             $this->conn = new PDO("mysql:host=$this->host;dbname=$this->name", $this->user, $this->password);
             // set the PDO error mode to exception
@@ -33,6 +32,15 @@ class Database{
         }
 
         return $this->conn;
+    }
+
+    public function beginTransaction(){
+        try{
+            return $this->conn->beginTransaction();
+        }catch(PDOException $e){
+            $e->getMessage();
+        }
+        return null;
     }
 
     public function closeConnection(){
