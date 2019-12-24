@@ -3,6 +3,16 @@ a[class="navbar-brand"]{
 }
 
 a{float: right;}
+
+button>a{
+  text-decoration: none;
+  color: #fff;
+}
+
+button>a:hover{
+  text-decoration: none;
+  color: #fff;
+}
   
 h3{color: #AFD275;}
 
@@ -24,9 +34,22 @@ input[placeholder]{
     padding-left: 0.4em;
 }
 
+li>a{
+  color: #1F2833;
+}
+
+li>a:hover{
+  text-decoration: none;
+  color: #555759
+}
+
 img{
   padding: 4%;
   height: 250px;
+}
+
+tr>td:first-child{
+  font-weight: 600;
 }
 
 nav input{

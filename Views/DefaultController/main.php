@@ -31,7 +31,7 @@
             <p class="card-text">Click the link below to see all laptops!</p>
           </div>
           <div class="card-footer">
-          <button type="button" class="btn btn-info"><a href="?page=device">Show all</a></button>
+          <button type="button" class="btn btn-info float-right"><a href="?page=devices_laptops">Show all</a></button>
           </div>
         </div>
         <div class="card col-md-3 col-sm-6 col-xs-12">
@@ -41,7 +41,7 @@
             <p class="card-text">Click the link below to see all projectors!</p>
           </div>
           <div class="card-footer">
-            <button type="button" class="btn btn-info"><a href="?page=device">Show all</a></button>
+            <button type="button" class="btn btn-info float-right"><a href="?page=devices_projectors">Show all</a></button>
           </div>
         </div>
         <div class="card col-md-3 col-sm-6 col-xs-12">
@@ -51,7 +51,7 @@
             <p class="card-text justify-content-end">Click the link below to see all speakers!</p>
           </div>
           <div class="card-footer">
-            <button type="button" class="btn btn-info"><a href="?page=device">Show all</a></button>
+            <button type="button" class="btn btn-info float-right"><a href="?page=devices_speakers">Show all</a></button>
           </div>
         </div>
         <div class="card col-md-3 col-sm-6 col-xs-12">
@@ -61,7 +61,7 @@
             <p class="card-text">Click the link below to see all cameras!</p>
           </div>
             <div class="card-footer">
-              <button type="button" class="btn btn-info"><a href="?page=device">Show all</a></button>
+              <button type="button" class="btn btn-info float-right"><a href="?page=devices_cameras">Show all</a></button>
             </div>
           </div>
         </div>

@@ -3,12 +3,12 @@ a[class="navbar-brand"]{
 }
 
 button>a{
-  color: #000000;
+  color: #fff;
 }
 
 button>a:hover{
   text-decoration: none;
-  color: #ffffff;
+  color: #fff;
 }
 
 img{

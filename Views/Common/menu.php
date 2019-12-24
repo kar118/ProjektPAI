@@ -12,10 +12,10 @@
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown03" data-toggle="dropdown" aria-haspo..\pup="true" aria-expanded="false">Devices</a>
             <div class="dropdown-menu" aria-labelledby="dropdown03">
-                <a class="dropdown-item" href="?page=devices">Laptops</a>
-                <a class="dropdown-item" href="?page=devices">Projectors</a>
-                <a class="dropdown-item" href="?page=devices">Speakers</a>
-                <a class="dropdown-item" href="?page=devices">Cameras</a>
+                <a class="dropdown-item" href="?page=devices_laptops">Laptops</a>
+                <a class="dropdown-item" href="?page=devices_projectors">Projectors</a>
+                <a class="dropdown-item" href="?page=devices_speakers">Speakers</a>
+                <a class="dropdown-item" href="?page=devices_cameras">Cameras</a>
             </div>
         </li>
         <li class="nav-item dropdown">

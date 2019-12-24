@@ -29,6 +29,15 @@ img{
   height: 250px;
 }
 
+li>a{
+  color: #1F2833;
+}
+
+li>a:hover{
+  text-decoration: none;
+  color: #555759
+}
+
 .container{
   margin: 4% auto 4% auto;
 }

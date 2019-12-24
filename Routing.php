@@ -11,8 +11,14 @@ class Routing{
         $this->routes = [
            'confirmation' => ['controller' => 'DefaultController', 'action' =>
            'confirmation'],
-           'devices' => ['controller' => 'DefaultController', 'action' =>
-           'devices'],
+           'devices_laptops' => ['controller' => 'DefaultController', 'action' =>
+           'devices_laptops'],
+           'devices_projectors' => ['controller' => 'DefaultController', 'action' =>
+           'devices_projectors'],
+           'devices_speakers' => ['controller' => 'DefaultController', 'action' =>
+           'devices_speakers'],
+           'devices_cameras' => ['controller' => 'DefaultController', 'action' =>
+           'devices_cameras'],
            'main' => ['controller' => 'DefaultController', 'action' =>
            'main'],
            'my-shop' => ['controller' => 'DefaultController', 'action' =>
