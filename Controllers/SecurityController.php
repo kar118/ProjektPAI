@@ -54,7 +54,15 @@ class SecurityController extends AppController
                 $address = new Address($tmp['country'],$tmp['locality'],$tmp['street'],$tmp['streetNum'],$tmp['flatNum'],$tmp['postcodeNum'],$tmp['postcodeLocality']);
                 $user = new User($row['name'],$row['surname'],$address,$row['email'],$row['password']);
                 $_SESSION['user'] = serialize($user);
-                $_SESSION["id"] = $user->getEmail();
+                $_SESSION['id'] = $user->getEmail();
+                $_SESSION['user_id'] = $row['userId'];
+                $_SESSION['country'] = $address->getCountry();
+                $_SESSION['locality'] = $address->getLocality();
+                $_SESSION['street'] = $address->getStreet();
+                $_SESSION['streetNum'] = $address->getStreetNum();
+                $_SESSION['flatNum'] = $address->getFlatNum();
+                $_SESSION['postNum'] = $address->getPostNum();
+                $_SESSION['postLocality'] = $address->getPostLocality();
                 $db->closeConnection();
                 break;
             }
@@ -117,10 +125,10 @@ class SecurityController extends AppController
                 $insertAddress->bindParam(':country',$country,PDO::PARAM_STR);
                 $insertAddress->bindParam(':locality',$locality,PDO::PARAM_STR);
                 $insertAddress->bindParam(':street',$street,PDO::PARAM_STR);
-                $insertAddress->bindParam(':street_number',$street_number,PDO::PARAM_STR);
+                $insertAddress->bindParam(':street_number',$street_number,PDO::PARAM_INT);
                 $insertAddress->bindParam(':post_locality',$post_locality,PDO::PARAM_STR);
-                $insertAddress->bindParam(':post_number',$post_number,PDO::PARAM_STR);
-                $insertAddress->bindParam(':flat_number',$flat_number,PDO::PARAM_STR);
+                $insertAddress->bindParam(':post_number',$post_number,PDO::PARAM_INT);
+                $insertAddress->bindParam(':flat_number',$flat_number,PDO::PARAM_INT);
                 $insertAddress->execute();
     
                 $maxId = $conn->lastInsertId();

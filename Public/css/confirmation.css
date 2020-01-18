@@ -10,12 +10,23 @@
     outline-color: #1F2833;
 }
 
-input[placeholder]{
+input[value]{
     padding-left: 0.4em;
+    font-weight: 500;
+}
+
+input[id="confirm-order"]{
+    width: 20em;
+}
+
+.bg-form{
+  background-color:#222629;
+  border-top: 1px dotted #228833;
+  background-image: linear-gradient(#222629, #222649);
 }
 
 .card{
-    border: 1px solid #45A29E;
+    /* border: 4px solid #45A29E; */
     background-color: #1F2833;
     color: white;
 }
@@ -25,4 +36,17 @@ input[placeholder]{
     max-width: 100%;
     margin-left: auto;
     margin-right: auto;
+}
+
+li>a{
+  color: #1F2833;
+}
+
+li>a:hover{
+  text-decoration: none;
+  color: #555759
+}
+
+tr>td:first-child{
+  font-weight: 600;
 }

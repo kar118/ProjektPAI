@@ -23,6 +23,8 @@ class Routing{
            'main'],
            'my-shop' => ['controller' => 'DefaultController', 'action' =>
            'myShop'],
+           'my-order' => ['controller' => 'DefaultController', 'action' =>
+           'order'],
            'resetEmail' => ['controller' => 'SecurityController', 'action' =>
            'resetEmail'],
            'resetPass' => ['controller' => 'SecurityController', 'action' =>

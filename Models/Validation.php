@@ -65,6 +65,30 @@ class Validation{
     private $err_val = null;
  
     private $flag = true;
+
+    public function resetMessagesValues(){
+        $messages = [];
+        $err_surname_name = null;
+        $err_surname_name_val = null;
+        $err_email = null;
+        $err_email_val = null;
+        $err_pass = null;
+        $err_pass_val = null;
+        $err_country = null;
+        $err_country_val = null;
+        $err_locality = null;
+        $err_locality_val = null;
+        $err_street = null;
+        $err_street_val = null;
+        $err_flat_number = null;
+        $err_flat_number_val = null;
+        $err_postcode = null;
+        $err_postcode_val = null;
+        $err = null;
+        $err_val = null;
+
+        $flag = true;    
+    }
     
     public function getMessages() : array{
         $messages = [
@@ -83,6 +107,7 @@ class Validation{
     }
 
     public function validateRegisterForm(){
+
         if(strlen($this->name) < 3 || (1 === preg_match('~[0-9]~', $this->name))){
             $this->flag = false;
             $this->err_surname_name = 'err_surname_name';
@@ -151,4 +176,34 @@ class Validation{
         return $this->flag;
     }
 
+    public function validateOrder() :bool{
+        $flag = true;
+
+        if(strlen($_POST['country']) < 3)
+            $flag = false;
+        
+        if(strlen($_POST['locality']) < 1)
+            $flag = false;
+        
+        if($_POST['street'] === '')
+            $_POST['street'] === 'Brak';
+        else if(strlen($_POST['street']) < 1)
+            $flag = false;
+        
+        if($_POST['streetNum'] === '')
+            $_POST['streetNum'] = 0;
+        else if($_POST['streetNum'] < 1)
+            $flag = false;
+        
+        if($_POST['flatNum'] < 1)
+            $flag = false;
+        
+        if(strlen($_POST['postLocality']) < 1)
+            $flag = false;
+
+        if(!preg_match('/^[0-9]{2}-?[0-9]{3}$/Du', $_POST['postNum']))
+            $flag = false;
+
+        return $flag;
+    }
 }
