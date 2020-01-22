@@ -24,28 +24,33 @@
                     <h6>Reset password</h6>
                 </div>
             </div>
+        <form name="resetPassForm">
             <div class="row justify-content-center">
                 <div class="col-lg-7 col-md-7 col-sm-11 col-xs-11">
-                    <input type="email" placeholder="email">
+                    <input type="email" placeholder="email" name="email">
                 </div>
             </div>
             <div class="row justify-content-center">
                 <div class="col-lg-7 col-md-7 col-sm-11 col-xs-11">
-                    <input type="password" placeholder="password">
+                    <input type="password" placeholder="password" name="password">
                 </div>
             </div>
             <div class="row justify-content-center">
                 <div class="col-lg-7 col-md-7 col-sm-11 col-xs-11">
-                    <input type="password" placeholder="confirm password">
+                    <input type="password" placeholder="confirm password" name="confirmPassword">
                 </div>
             </div>
-        </div>
-        <div class="row justify-content-center mx-2 my-3">
-            <button class="btn btn-outline-primary" type="submit">CONTINUE</button>
-        </div>
+            </div>
+            <div class="row justify-content-center mx-2 my-3">
+                <button id="resetPassBtn" class="btn btn-outline-primary">CONTINUE</button>
+            </div>
+        </from>
+            
     </div>
 
      <!-- Optional JavaScript -->
+     <script src="Public/js/formValidation.js"></script>
+
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

@@ -25,6 +25,14 @@ class Routing{
            'myShop'],
            'my-order' => ['controller' => 'DefaultController', 'action' =>
            'order'],
+           'prolonge' => ['controller' => 'DefaultController', 'action' =>
+           'prolonge'],
+           'search' => ['controller' => 'DefaultController', 'action' =>
+           'search'],
+           'admin' => ['controller' => 'DefaultController', 'action' =>
+           'admin'],
+           'addNewProduct' => ['controller' => 'DefaultController', 'action' =>
+           'addNewProduct'],
            'resetEmail' => ['controller' => 'SecurityController', 'action' =>
            'resetEmail'],
            'resetPass' => ['controller' => 'SecurityController', 'action' =>

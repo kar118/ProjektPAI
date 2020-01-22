@@ -3,44 +3,49 @@
 
     $db = new Database('localhost','project','root','');
     $conn = $db->getConn();
-    $devices_stmt = $conn->prepare('SELECT * FROM projectors');
-    $devices_stmt->execute();
+    $details = $conn->prepare('SELECT details.description, product.product_id, product.amount FROM product INNER JOIN category ON product.category_id = category.category_id INNER JOIN details ON product.details_id = details.details_id AND category.name = "Projector" AND product.amount > 0');
+    $details->execute();
 ?>
 
-<?php foreach($devices_stmt as $row){ ?>
+<?php foreach($details as $tmp){ ?>
+    <?php $row = json_decode($tmp[0],true);?>
     <div class="row no-gutters bg-light position-relative my-4">
     <div class="col-md-4">
-    <img src="<?= 'Public/img/projectors/'.$row['mark'].$row['model'].'/1.jpg' ?>" class="w-100 mt-4" alt="...">
+        <img src="<?= 'Public/img/Projectors/'.$row['MARK'].$row['MODEL'].'/1.jpg' ?>" class="img-fluid pt-5" alt="...">
     </div>
-    <div class="col-md-8 position-static p-4 pl-md-0">
-    <h5 class="mt-0"><?= $row['mark'].' '.$row['model'] ?></h5>
-    <p>
-        <table class="table table-striped">
+    <div class="col-md-8 pt-3 px-3 position-static pl-md-0">
+    
+    
+        <table class="table ">
         <tbody>
             <tr>
+            <td>Product</td>
+            <td> <?= $row['MARK'].' '.$row['MODEL'] ?></td>
+            </tr>
+            <tr>
             <td>Brightness</td>
-            <td><?= $row['brightness'] ?></td>
+            <td><?= $row['BRIGHTNESS'] ?>lm</td>
             </tr>
             <tr>
             <td>Image technology</td>
-            <td><?= $row['imageTechnology'] ?></td>
+            <td><?= $row['TECHNOLOGIES'] ?></td>
             </tr>
             <tr>
             <td>WiFi</td>
-            <td><?= $row['WiFi'] ?></td>
+            <td><?= $row['WIFI'] ?></td>
             </tr>
             <tr>
             <td>Lamp lifetime</td>
-            <td><?= $row['lampLifetime'] ?></td>
+            <td><?= $row['RESOLUTION'] ?></td>
             </tr>
             <tr>
             <td>USB Support</td>
-            <td><?= $row['USBsupport'] ?></td>
+            <td><?= $row['CONNECTIONS'] ?></td>
             </tr>
         </tbody>
         </table>
-    </p>
-        <button class="btn btn-info float-right "><a href="?page=confirmation">Order</a></button>
+    
+        <button class="btn btn-info float-right mb-2"><a href="?page=confirmation&device=<?=$tmp[1]?>&amount=<?=$tmp[2]?>">Order</a></button>
     </div>
     </div>
 <?php } ?>

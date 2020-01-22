@@ -56,6 +56,7 @@ class SecurityController extends AppController
                 $_SESSION['user'] = serialize($user);
                 $_SESSION['id'] = $user->getEmail();
                 $_SESSION['user_id'] = $row['userId'];
+                $_SESSION['role'] = $row['role'];
                 $_SESSION['country'] = $address->getCountry();
                 $_SESSION['locality'] = $address->getLocality();
                 $_SESSION['street'] = $address->getStreet();
@@ -92,24 +93,19 @@ class SecurityController extends AppController
 
     public function createAccount(){
 
-        $name = strtoupper($_POST['name']);
-        $surname = strtoupper($_POST['surname']);
-        $email = $_POST['email'];
-        $pass = $_POST['password'];
-        $pass_confirm = $_POST['confirm_password'];
-        $country = strtoupper($_POST['country']);
-        $locality = strtoupper($_POST['locality']);
-        $street = strtoupper($_POST['street']);
-        $street_number = strtoupper($_POST['street_number']);
-        $flat_number = $_POST['flat_number'];
-        $post_number = $_POST['postcode_number'];
-        $post_locality = strtoupper($_POST['postcode_locality']);
+        $_POST['name'] = strtoupper($_POST['name']);
+        $_POST['surname'] = strtoupper($_POST['surname']);
+        $_POST['country'] = strtoupper($_POST['country']);
+        $_POST['locality'] = strtoupper($_POST['locality']);
+        $_POST['street'] = strtoupper($_POST['street']);
+        $_POST['street_number'] = strtoupper($_POST['street_number']);
+        $_POST['postcode_locality'] = strtoupper($_POST['postcode_locality']);
 
         $flag = true;
-        $password_hash = password_hash($pass, PASSWORD_DEFAULT);
+        $password_hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
         $maxId = null;
 
-        $validation = new Validation($name,$surname,$email,$pass,$pass_confirm,$country,$locality,$street,$street_number,$flat_number,$post_number,$post_locality);
+        $validation = new Validation($_POST);
         $flag = $validation->validateRegisterForm();
         $messages = $validation->getMessages();
 
@@ -120,35 +116,42 @@ class SecurityController extends AppController
                 $db = new Database('localhost','project','root','');
                 $conn = $db->getConn();
                 $conn->beginTransaction();                
-
                 $insertAddress = $conn->prepare('INSERT INTO addresses (country, locality, street, streetNum, postcodeLocality, postcodeNum, flatNum) VALUES (:country, :locality, :street, :street_number, :post_locality, :post_number, :flat_number)');
-                $insertAddress->bindParam(':country',$country,PDO::PARAM_STR);
-                $insertAddress->bindParam(':locality',$locality,PDO::PARAM_STR);
-                $insertAddress->bindParam(':street',$street,PDO::PARAM_STR);
-                $insertAddress->bindParam(':street_number',$street_number,PDO::PARAM_INT);
-                $insertAddress->bindParam(':post_locality',$post_locality,PDO::PARAM_STR);
-                $insertAddress->bindParam(':post_number',$post_number,PDO::PARAM_INT);
-                $insertAddress->bindParam(':flat_number',$flat_number,PDO::PARAM_INT);
+                $insertAddress->bindParam(':country',$_POST['country'],PDO::PARAM_STR);
+                $insertAddress->bindParam(':locality',$_POST['locality'],PDO::PARAM_STR);
+                $insertAddress->bindParam(':street',$_POST['street'],PDO::PARAM_STR);
+                $insertAddress->bindParam(':street_number',$_POST['street_number'],PDO::PARAM_INT);
+                $insertAddress->bindParam(':post_locality',$_POST['postcode_locality'],PDO::PARAM_STR);
+                $insertAddress->bindParam(':post_number',$_POST['postcode_number'],PDO::PARAM_INT);
+                $insertAddress->bindParam(':flat_number',$_POST['flat_number'],PDO::PARAM_INT);
                 $insertAddress->execute();
     
                 $maxId = $conn->lastInsertId();
+                echo $_POST['email'];
+                $insertUsers = $conn->prepare('INSERT INTO users (name, surname, email, password, addressId) VALUES (:name,:surname,:email,:password_hash,:maxId)');  
+                $insertUsers->bindParam(':name',$_POST['name'],PDO::PARAM_STR);
+                $insertUsers->bindParam(':surname',$_POST['surname'],PDO::PARAM_STR);
+                $insertUsers->bindParam(':email',$_POST['email'],PDO::PARAM_STR);
+                $insertUsers->bindParam(':password_hash',$password_hash,PDO::PARAM_STR);
+                $insertUsers->bindParam(':maxId',$maxId,PDO::PARAM_INT);
+                $insertUsers->execute();
                 
-                $conn->query("INSERT INTO users (name, surname, email, password, addressId) VALUES ('$name', '$surname','$email','$password_hash','$maxId')");  
                 $conn->commit();
 
             }catch(PDOException $e){
                 $conn->rollBack();
                 $db->closeConnection();
-
+                echo $e;
                 $err = 'err';
                 $err_val = 'Account has not been created!';
                 $this->render('singUp', $messages);
+                exit();
             }
-
-            $this->render('singIn', ['message' => ['You\'ve created an account!']]);
             $db->closeConnection();
+            $this->render('singIn', ['message' => ['You\'ve created an account!']]);
+            exit();
         }
-        else{
+        else{echo 'flag';
             $this->render('singUp', $messages);
         }
     }

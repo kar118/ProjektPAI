@@ -18,7 +18,7 @@
   <?php
     include($_SERVER['DOCUMENT_ROOT'].'/Projekt/Views/Common/menu.php');
   ?>
-  <div class="container">
+  <div class="container mb-5">
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="?page=myShop">Main</a></li>
@@ -27,11 +27,10 @@
     </nav>
 
     <?php include($_SERVER['DOCUMENT_ROOT'].'/projekt/Views/Common/laptops.php') ?>
-    
+      
   </div>
-  <?php
-    include($_SERVER['DOCUMENT_ROOT'].'/Projekt/Views/Common/footer.php');
-  ?>
+  
+  <?php include($_SERVER['DOCUMENT_ROOT'].'/projekt/Views/Common/footer.php') ?>
 
     <!-- Optional JavaScript -->
 

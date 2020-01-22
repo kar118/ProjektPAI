@@ -4,6 +4,16 @@ a[class="navbar-brand"]{
 
 a{float: right;}
 
+button>a{
+  text-decoration: none;
+  color: white;
+}
+
+button>a:hover{
+  text-decoration: none;
+  color: white;
+}
+
 h3{color: #AFD275;}
 
 h6{color:white;}
@@ -40,6 +50,7 @@ li>a:hover{
 
 .container{
   margin: 4% auto 4% auto;
+  height: 100vh;
 }
 
 .card{
@@ -48,4 +59,8 @@ li>a:hover{
 
 .card img{
   background-color: #e0ebeb;
+}
+
+tr>td:first-child{
+  font-weight: 600;
 }

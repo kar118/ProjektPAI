@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="Public/css/footer.css">
 
-<footer class="page-footer text-white pt-4">
+<footer class="page-footer text-white pt-4 mt-0">
     <div class="container-fluid py-3">
         <div class="row justify-content-center">             
             <div>

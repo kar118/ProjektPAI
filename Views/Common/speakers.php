@@ -3,31 +3,35 @@
 
     $db = new Database('localhost','project','root','');
     $conn = $db->getConn();
-    $devices_stmt = $conn->prepare('SELECT * FROM speakers');
-    $devices_stmt->execute();
+    $details = $conn->prepare('SELECT details.description, product.product_id, product.amount FROM product INNER JOIN category ON product.category_id = category.category_id INNER JOIN details ON product.category_id = category.category_id AND product.details_id = details.details_id AND category.name = "Speaker" AND product.amount > 0');
+    $details->execute();
 ?>
 
-<?php foreach($devices_stmt as $row){ ?>
+<?php foreach($details as $tmp){ ?>
+    <?php $row = json_decode($tmp[0],true);?>
     <div class="row no-gutters bg-light position-relative my-4">
     <div class="col-md-4">
-    <img src="<?= 'Public/img/Speakers/'.$row['mark'].$row['model'].'/1.jpg' ?>" class="w-100 mt-4" alt="...">
+    <img src="<?= 'Public/img/Speakers/'.$row['MARK'].$row['MODEL'].'/1.jpg' ?>" class="img-fluid" alt="...">
     </div>
     <div class="col-md-8 position-static p-4 pl-md-0">
-    <h5 class="mt-0"><?= $row['mark'].' '.$row['model'] ?></h5>
     <p>
-        <table class="table table-striped">
+        <table class="table table">
         <tbody>
             <tr>
-            <td>Sound decoder</td>
-            <td><?= $row['soundDecoder'] ?></td>
+            <td>Product</td>
+            <td><?=  $row['MARK'].' '.$row['MODEL'] ?></td>
             </tr>
             <tr>
-            <td>Channel amoutn</td>
-            <td><?= $row['channelAmount'] ?></td>
+            <td>Sound decoder</td>
+            <td><?= $row['SOUND DECODER'] ?></td>
+            </tr>
+            <tr>
+            <td>Others</td>
+            <td><?= $row['OTHERS'] ?></td>
             </tr>
             <tr>
             <td>Power</td>
-            <td><?= $row['power'] ?> W</td>
+            <td><?= $row['POWER'] ?></td>
             </tr>
         </tbody>
         </table>

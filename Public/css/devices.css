@@ -58,6 +58,7 @@ nav input{
 
 .container{
   margin: 4% auto 4% auto;
+  height: 100vh;
 }
 
 .card{

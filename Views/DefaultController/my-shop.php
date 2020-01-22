@@ -3,7 +3,16 @@
       $url = "http://$_SERVER[HTTP_HOST]/";
       header("Location: {$url}projekt/index.php?page=singIn");
       exit();
-    }
+    }else{
+      $db = new Database('localhost','project','root','');
+      $conn = $db->getConn();
+      $details = $conn->prepare('SELECT product.mark,product.model,product.cost,orders.amount , orders.date_start, orders.date_end, category.name, orders.orders_id FROM orders,product,category WHERE orders.product_id = product.product_id AND category.category_id = product.category_id AND orders.user_id = :id');
+      $details->bindParam(':id',$_SESSION['user_id'],PDO::PARAM_INT);
+      $result = $details->execute();
+      
+      $result = $details->fetchAll(PDO::FETCH_ASSOC);
+      
+  }
 ?>
 <!DOCTYPE html>
 <html lang="pl">
@@ -25,75 +34,52 @@
         <li class="breadcrumb-item active" aria-current="page">My shop</li>
       </ol>
     </nav>
-    
-    <div class="row no-gutters bg-light position-relative my-4">
-      <div class="col-md-4 mb-md-0 p-md-1">
-        <img src="Public/img/lenowo_legion.png" class="" alt="...">
-      </div>
-      <div class="col-md-8 position-static p-4 pl-md-0">
-        <h5 class="mt-0">Columns with stretched link</h5>
-        <p class="card-text">
-              <table class="table table-striped">
-                  <tbody>
+    <?php foreach($result as $tmp){ ?>
+        <div class="row no-gutters bg-light position-relative  my-3">
+            <div class="col-md-4">
+                <img src="<?= 'Public/img/'.$tmp['name'].'s/'.$tmp['mark'].$tmp['model'].'/1.jpg' ?>" class="w-100 pt-5 img-fluid" alt="...">
+            </div>
+            <div class="col-md-8 px-2 pb-2 position-static pl-md-0">
+                <table class="table">
+                <tbody>
                     <tr>
-                      <td>From</td>
-                      <td>12-10-2019</td>
+                    <td>Product</td>
+                    <td><?= $tmp['mark'].' '.$tmp['model'] ?></td>
                     </tr>
                     <tr>
-                      <td>To</td>
-                      <td>15-10-2019</td>
+                    <td>From</td>
+                    <td><?= $tmp['date_start'] ?></td>
                     </tr>
                     <tr>
-                      <td>Total cost</td>
-                      <td>150.00$</td>
+                    <td>To</td>
+                    <td><?= $tmp['date_end'] ?></td>
                     </tr>
-                  </tbody>
+                    <tr>
+                    <td>Amount</td>
+                    <td><?= $tmp['amount'] ?></td>
+                    </tr>
+                    <tr>
+                    <td>To pay</td>
+                    <td>
+                      <?php 
+                        $diff = abs(strtotime($tmp['date_end']) - strtotime($tmp['date_start']));
+                        $years = floor($diff / (365*60*60*24)); 
+                        $months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24)); 
+                        echo ($days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24)) + 1) * ($tmp['amount'] * $tmp['cost']); 
+                      ?>$
+                    </td>
+                    </tr>
+                   
+                </tbody>
                 </table>
-          </p>
-          <ul class="list-group list-group-flush">
-              <div class="alert alert-primary" role="alert">
-                <a href="#" class="alert-link">Prolong renting</a>
-              </div>
-          </ul>
-      </div>
+                <button class="btn btn-info float-right m-1"><a href="?page=prolonge&id=<?= $tmp['orders_id'] ?>">Prolong order</a></button>
+            </div>
+        </div>
+        <?php } ?>
     </div>
-
-    <div class="row no-gutters bg-light position-relative my-4">
-      <div class="col-md-4 mb-md-0 p-md-1">
-        <img src="Public/img/lenowo_legion.png" class="" alt="...">
-      </div>
-      <div class="col-md-8 position-static p-4 pl-md-0">
-        <h5 class="mt-0">Columns with stretched link</h5>
-        <p class="card-text">
-              <table class="table table-striped">
-                  <tbody>
-                    <tr>
-                      <td>From</td>
-                      <td>12-10-2019</td>
-                    </tr>
-                    <tr>
-                      <td>To</td>
-                      <td>15-10-2019</td>
-                    </tr>
-                    <tr>
-                      <td>Total cost</td>
-                      <td>150.00$</td>
-                    </tr>
-                  </tbody>
-                </table>
-          </p>
-          <ul class="list-group list-group-flush">
-              <div class="alert alert-primary" role="alert">
-                <a href="#" class="alert-link">Prolong renting</a>
-              </div>
-          </ul>
-      </div>
-    </div>
-
-  </div>
 </div>
 <?php
-  include($_SERVER['DOCUMENT_ROOT'].'/Projekt/Views/Common/footer.php');
+    include($_SERVER['DOCUMENT_ROOT'].'/Projekt/Views/Common/footer.php');
 ?>
 
     <!-- Optional JavaScript -->

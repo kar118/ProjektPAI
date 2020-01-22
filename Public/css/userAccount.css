@@ -12,6 +12,10 @@ a:hover{
     cursor: pointer;
 }
 
+button{
+  min-width: 20em;
+}
+
 h3{color: #AFD275;}
 
 h6, p{color:white;}
@@ -42,5 +46,6 @@ li>a:hover{
 }
 
 .container{
-  margin: 2% auto 4% auto;
+  margin: 4% auto 4% auto;
+  height: 100vh;
 }

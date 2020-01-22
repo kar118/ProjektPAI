@@ -58,8 +58,17 @@
             </form>   
             <div class="row justify-content-center mt-2">
                 <a class="btn btn-outline-primary" href="?page=singUp">SING UP</a>
+            </div>
+            <div class="row justify-content-center mt-2">
+                <button class="btn btn-success btn-about">About us</button>
+            </div>
+            <div class="row justify-content-center mt-4 about">
+                <p class="about-content lead"></p>
             </div>    
         </div>
-    </div>    
+    </div>  
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <script src="Public/js/about.js"></script>  
 </body>
 </html>

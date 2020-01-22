@@ -22,7 +22,7 @@
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="?page=myShop">Devices</a></li>
-          <li class="breadcrumb-item active" aria-current="page">Laptops</li>
+          <li class="breadcrumb-item active" aria-current="page">Cameras</li>
         </ol>
     </nav>
 

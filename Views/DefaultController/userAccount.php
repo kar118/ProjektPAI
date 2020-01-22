@@ -25,7 +25,7 @@
                 <li class="breadcrumb-item active" aria-current="page">Account</li>
             </ol>
         </nav>
-        <div class="items">
+        <div class="items mt-4">
             <form action="">
                 <div class="row justify-content-center">
                     <h6 class="lead display-4">Informations abaut you</h6>
